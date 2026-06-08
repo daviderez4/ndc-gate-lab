@@ -1,5 +1,0 @@
-NDLB-PLACEHOLDER
-This is a stand-in for a real sealed .ndc container (NDC v0.3 PQ-hybrid).
-In iteration 4 the gate will run `ndc inspect` to confirm this is a genuine
-sealed container (magic "NDLB", valid header, ciphertext) and not a renamed
-plaintext file. For iteration 0 the gate only checks the .ndc boundary.

@@ -7,14 +7,29 @@ This is the PoC for the two conditions that make it real:
 1. **Possession ≠ access.** Anyone with repo access can `git clone` the `.ndc` files like any employee — but a `.ndc` is just ciphertext. Opening it requires a *live, authorized* open through NoData (governed mode), so we can **revoke / burn / audit** even after download.
 2. **Code still works.** Source code stays plaintext (it must compile). Data files become `.ndc` and are opened *transparently at runtime* by authorized principals (CI, the app) via the executor — so the build doesn't break.
 
-## What's in this lab (iteration 0 — the blocking gate)
+## What's in this lab
+
+**Iteration 0 — the blocking gate**
 
 | Piece | File | Status |
 |---|---|---|
 | **Policy** — which paths must be `.ndc` | `.nodata/policy.json` | ✅ |
 | **The gate** — fails if a protected file is plaintext | `scripts/ndc-gate.mjs` (zero-dep Node) | ✅ |
 | **Required check** — runs the gate on PR + push to `main` | `.github/workflows/ndc-gate.yml` | ✅ |
-| Sample protected dir | `data/` | ✅ |
+| **Ruleset** — makes the check unbypassable (empty bypass) | `.nodata/ruleset.json` | ✅ |
+
+**Iteration 1 — the real format + governed open** → see **[`FORMAT.md`](FORMAT.md)**
+
+| Piece | File | Status |
+|---|---|---|
+| **`.ndc` container format** — real envelope crypto (X25519 + AES-256-GCM) | `tools/ndc.mjs` | ✅ |
+| **Governed executor** — holds the key, enforces policy/revoke, emits receipts | `tools/executor.mjs` | ✅ |
+| **Transparent mode** — git clean/smudge filter | `tools/ndc-filter.mjs` | ✅ (optional) |
+| **End-to-end demo** — seal → deny → revoke → receipts | `demo/run.sh` | ✅ |
+
+```bash
+bash demo/run.sh   # watch possession ≠ access, and revoke kill an already-cloned file
+```
 
 ### How the gate works (iteration 0)
 - `.nodata/policy.json` declares **protected globs** (e.g. `data/**`). Inside them, every file **must end in `.ndc`** (except an allow-list like `README.md` / `.gitkeep`).

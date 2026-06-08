@@ -1,3 +1,7 @@
 node_modules/
 *.log
 .DS_Store
+
+# executor key custody + demo artifacts — never committed
+tools/vault/
+demo/workspace/
