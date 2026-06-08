@@ -1,0 +1,26 @@
+name: ndc-gate
+
+# The unbypassable boundary. When this workflow's job is set as a REQUIRED
+# status check on `main` (via a branch/org ruleset with an empty bypass list),
+# no PR can merge unless every protected file is a sealed .ndc container.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ndc-gate:
+    name: ndc-gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run the NDC gate
+        run: node scripts/ndc-gate.mjs

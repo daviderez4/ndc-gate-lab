@@ -1,0 +1,15 @@
+{
+  "version": 0,
+  "description": "NDC gate policy. Inside protectedPaths every file must be a .ndc container. Source code and config stay plaintext so builds keep working.",
+  "protectedPaths": [
+    "data/**",
+    "datasets/**",
+    "secrets/**"
+  ],
+  "allowPlaintext": [
+    "**/README.md",
+    "**/.gitkeep",
+    "**/.gitignore"
+  ],
+  "notes": "iteration 0 enforces the .ndc extension boundary only. Container-validity (ndc inspect) and governed-open are later iterations."
+}
