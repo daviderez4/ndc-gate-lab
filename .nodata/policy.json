@@ -11,5 +11,5 @@
     "**/.gitkeep",
     "**/.gitignore"
   ],
-  "notes": "iteration 0 enforces the .ndc extension boundary only. Container-validity (ndc inspect) and governed-open are later iterations."
+  "notes": "Enforced by magic bytes (NDLB) — must be a REAL sealed container, not just a .ndc name. A renamed plaintext file is rejected. Governed-open is a later iteration."
 }
