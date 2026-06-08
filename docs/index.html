@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The .ndc gate — your repo, sealed</title>
+<meta name="description" content="An unbypassable gate that turns a shared GitHub repo into a governed boundary: every data file becomes a sealed .ndc, code keeps working, and you keep control even after a file is cloned." />
+<style>
+  :root{
+    --ink:#14110D; --cream:#F4EFE6; --gold:#C8A24B; --gold-hi:#E4C677;
+    --paper:#FBF8F1; --line:#E6DCC8; --dim:#6B6256; --green:#1B7A4E; --red:#B91C1C;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace; --sans:-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+  a{color:#9a7a2a;text-decoration:none} a:hover{text-decoration:underline}
+  code{font-family:var(--mono);background:#efe7d6;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--gold);font-weight:700}
+
+  /* hero */
+  header.hero{text-align:center;padding:64px 0 40px}
+  .mark{width:64px;height:64px;margin:0 auto 22px;display:block}
+  h1{font-size:clamp(30px,6vw,46px);line-height:1.08;margin:0 0 14px;letter-spacing:-.02em}
+  h1 .it{font-style:italic;font-family:Georgia,serif;color:#9a7a2a;font-weight:400}
+  .lede{font-size:18px;color:var(--dim);max-width:600px;margin:0 auto}
+  .cta{display:inline-flex;gap:9px;align-items:center;margin-top:26px;padding:13px 24px;border-radius:999px;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:var(--ink);font-weight:700;font-size:15px;border:1px solid var(--gold)}
+
+  section{padding:30px 0;border-top:1px solid var(--line)}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.13em;color:var(--gold);margin:0 0 18px}
+  h3{font-size:20px;margin:0 0 6px;letter-spacing:-.01em}
+  p{margin:0 0 12px}
+  .muted{color:var(--dim)}
+
+  /* the shift */
+  .shift{background:var(--ink);color:var(--cream);border-radius:18px;padding:30px 28px;margin:8px 0}
+  .shift .eyebrow{color:var(--gold-hi)}
+  .shift h3{font-size:23px;color:#fff;margin:8px 0 10px}
+  .shift p{color:#d8cfbf}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  @media(max-width:640px){.vs{grid-template-columns:1fr}}
+  .vs div{background:rgba(255,255,255,.05);border:1px solid rgba(228,198,119,.22);border-radius:12px;padding:14px 16px;font-size:14.5px}
+  .vs .was{color:#c9a9a9} .vs .now{color:#a8d8be}
+
+  /* flow */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:720px){.flow{grid-template-columns:1fr 1fr}}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+  .step .n{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:700}
+  .step .ic{font-size:24px;margin:6px 0 8px}
+  .step b{display:block;font-size:15px;margin-bottom:4px}
+  .step span{font-size:13px;color:var(--dim)}
+
+  /* guarantees */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .g{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .g .ic{font-size:22px} .g b{display:block;margin:8px 0 5px;font-size:16px}
+  .g span{font-size:13.5px;color:var(--dim)}
+
+  ul.limits{list-style:none;padding:0;margin:0}
+  ul.limits li{font-size:14px;color:var(--dim);padding:7px 0 7px 26px;position:relative;border-bottom:1px solid var(--line)}
+  ul.limits li:before{content:"•";position:absolute;left:8px;color:var(--gold)}
+
+  footer{text-align:center;padding:40px 0 70px;color:var(--dim);font-size:13px}
+  .links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <svg class="mark" viewBox="0 0 100 100" aria-label="NoData">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4C677"/><stop offset="1" stop-color="#B8893B"/></linearGradient>
+      <mask id="m"><rect x="14" y="14" width="72" height="72" rx="18" fill="#fff"/><rect x="0" y="45" width="100" height="10" fill="#000"/><circle cx="50" cy="50" r="19" fill="#000"/></mask></defs>
+      <rect x="14" y="14" width="72" height="72" rx="18" fill="url(#g)" mask="url(#m)"/>
+    </svg>
+    <div class="eyebrow">The .ndc gate</div>
+    <h1>Your shared repo, <span class="it">sealed.</span></h1>
+    <p class="lede">An unbypassable gate that lets developers work on a shared GitHub exactly as today — while every data file becomes a sealed container you still control after it's been cloned.</p>
+    <a class="cta" href="https://nodatacapsule.com">Visit NoData →</a>
+  </header>
+
+  <section>
+    <div class="shift">
+      <div class="eyebrow">The shift</div>
+      <h3>GitHub stops being just a warehouse for your files.</h3>
+      <p>It becomes a <b>governed boundary</b>. Nothing crosses it in the clear, and what's stored there is inert on its own — you no longer have to <i>trust</i> the place that holds your data.</p>
+      <div class="vs">
+        <div class="was"><b>Before</b> — a file warehouse you must trust. Anyone with access reads everything; once it's downloaded, it's gone.</div>
+        <div class="now"><b>After</b> — a controlled gateway. Files enter only sealed; reading needs a live, authorized decision; you can revoke even what's already cloned.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="flow">
+      <div class="step"><div class="n">01</div><div class="ic">🚦</div><b>The gate</b><span>A required check blocks any plaintext data file from entering. It can't be bypassed — not even by an admin.</span></div>
+      <div class="step"><div class="n">02</div><div class="ic">🔒</div><b>Seal</b><span>Each data file is sealed into a <code>.ndc</code> container. The plaintext is never inside it.</span></div>
+      <div class="step"><div class="n">03</div><div class="ic">🗄️</div><b>Store</b><span>GitHub keeps the sealed bytes — like any file. It never holds a key and never decrypts. It stays simple.</span></div>
+      <div class="step"><div class="n">04</div><div class="ic">✅</div><b>Open</b><span>To read, an authorized person or process asks to open it. The decision lives with you, and every open is recorded.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What you get</h2>
+    <div class="cards">
+      <div class="g"><div class="ic">🔑</div><b>Possession ≠ access</b><span>A developer can clone every file. Without authorization the bytes are useless. Downloading doesn't help them.</span></div>
+      <div class="g"><div class="ic">⚙️</div><b>Code keeps working</b><span>Source code stays normal and compiles. Authorized builds and apps open the data they need, transparently.</span></div>
+      <div class="g"><div class="ic">↩️</div><b>Revoke &amp; prove</b><span>Cut access at any time — even to a file already cloned. Burn it everywhere. Every decision is a verifiable receipt.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Honest about the edges</h2>
+    <ul class="limits">
+      <li>At the moment someone is authorized to open a file, they can read it — we shrink the blast radius (revoke, audit, burn), we don't pretend to un-see an authorized read.</li>
+      <li>Instant revoke vs. offline speed is a dial you set.</li>
+      <li>The same idea protects any place you choose — not only GitHub: buckets, drives, folders.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="links">
+      <a href="https://nodatacapsule.com">NoData</a>
+      <span class="muted">·</span>
+      <a href="https://nodatacapsule.com">Talk to us</a>
+    </div>
+    <div class="muted">We compute access, not permissions. The absence is the technology.</div>
+  </footer>
+
+</div>
+</body>
+</html>
